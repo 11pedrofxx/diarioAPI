@@ -1,0 +1,57 @@
+import { Router } from "express";
+
+import saveUser from "../service/UserService.js";
+import { buscarUserByID } from "../service/UserService.js";
+import { loginUser } from "../service/UserService.js";
+
+const endpoints = Router();
+
+endpoints.post('/user', async (req, resp) => {
+
+    try {
+        
+        let usuario = req.body;
+        let id = await saveUser(usuario);
+        resp.send(id)
+
+    } catch (error) {
+        resp.status(400).send(ErrorDefault(error))
+    }
+
+})
+
+endpoints.get('/user', async (req, resp) => {
+
+    try {
+
+    let id = req.query.id;
+    let usuario = await buscarUserByID(id);
+    resp.send(usuario)
+
+    } catch (error) {
+        resp.status(400).send(ErrorDefault(error))
+    }
+
+})
+
+endpoints.post ('/login', async (req, resp) => {
+
+    try {
+        
+        let email = req.body.email;
+        let senha = req.body.senha;
+
+        let usuario = await loginUser(email, senha);
+        resp.send({
+            mensagem: `Seja bem-vindo!`,
+            usuario: usuario
+        });
+
+    } catch (error) {
+        resp.status(400).send(ErrorDefault(error))
+    }
+
+})
+
+
+export default endpoints
