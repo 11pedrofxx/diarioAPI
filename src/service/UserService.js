@@ -1,6 +1,6 @@
 import * as db from '../repository/userRepository.js';
 
-export default async function saveUser(usuario) {
+export default async function  saveUser(usuario) {
 
     let emailLimpo = usuario.email.trim().toLowerCase();
     let usuarioExistente = await db.getEmail(emailLimpo);
@@ -14,7 +14,7 @@ export default async function saveUser(usuario) {
 
 }
 
-export async function buscarUserByID(id) {
+export async  function buscarUserByID(id) {
 
     if (!id || isNaN(id)) {
         throw new Error('Esse id não existe ou está indisponivel');
